@@ -13,11 +13,31 @@ contract SampleToken {
   string public standard = "Sample Token v1.0";
   uint256 public totalSupply;
 
+  // ERC20 events
+  event Transfer(
+    address indexed _from,
+    address indexed _to,
+    uint256 _value
+  );
+
   mapping(address => uint256) public balanceOf;
 
   function SampleToken (uint256 _initialSupply) public {
     // allocate the initial supply
     balanceOf[msg.sender] = _initialSupply;
     totalSupply = _initialSupply;
+  }
+
+  // Transfer
+  function transfer(address _to, uint256 _value) public returns (bool success) {
+    // Exception raised if account doesn't have enough tokens
+    require(balanceOf[msg.sender] >= _value);
+    // Transfer the balance
+    balanceOf[msg.sender] -= _value;
+    balanceOf[_to] += _value;
+    // Trigger transfer event
+    Transfer(msg.sender, _to, _value);
+    // If we made it here the function worked, return true
+    return true;
   }
 }
