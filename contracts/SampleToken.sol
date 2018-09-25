@@ -19,8 +19,14 @@ contract SampleToken {
     address indexed _to,
     uint256 _value
   );
+  event Approval(
+    address indexed _owner,
+    address indexed _spender,
+    uint256 _value
+  );
 
   mapping(address => uint256) public balanceOf;
+  mapping(address => mapping(address => uint256)) public allowance;
 
   function SampleToken (uint256 _initialSupply) public {
     // allocate the initial supply
@@ -38,6 +44,13 @@ contract SampleToken {
     // Trigger transfer event
     Transfer(msg.sender, _to, _value);
     // If we made it here the function worked, return true
+    return true;
+  }
+
+  function approve(address _spender, uint256 _value) public returns (bool success) {
+
+    allowance[msg.sender][_spender] = _value;
+    Approval(msg.sender, _spender, _value);
     return true;
   }
 }
