@@ -26,9 +26,15 @@ contract SampleTokenSale {
   function buyTokens(uint256 _numberOfTokens) public payable {
     require(msg.value == multiply(_numberOfTokens, tokenPrice));
     require(tokenContract.balanceOf(this) >= _numberOfTokens);
-    // This is where the msg.sender actually buys the tokens 
+    // This is where the msg.sender actually buys the tokens
     require(tokenContract.transfer(msg.sender, _numberOfTokens));
     tokensSold += _numberOfTokens;
     emit Sell(msg.sender, _numberOfTokens);
+  }
+
+  function endSale() public {
+    require(msg.sender == admin);
+    require(tokenContract.transfer(admin, tokenContract.balanceOf(this)));
+    admin.transfer(address(this).balance);
   }
 }
