@@ -28,7 +28,7 @@ contract SampleToken {
   mapping(address => uint256) public balanceOf;
   mapping(address => mapping(address => uint256)) public allowance;
 
-  function SampleToken (uint256 _initialSupply) public {
+  constructor (uint256 _initialSupply) public {
     // allocate the initial supply
     balanceOf[msg.sender] = _initialSupply;
     totalSupply = _initialSupply;
@@ -42,7 +42,7 @@ contract SampleToken {
     balanceOf[msg.sender] -= _value;
     balanceOf[_to] += _value;
     // Trigger transfer event
-    Transfer(msg.sender, _to, _value);
+    emit Transfer(msg.sender, _to, _value);
     // If we made it here the function worked, return true
     return true;
   }
@@ -50,7 +50,7 @@ contract SampleToken {
   function approve(address _spender, uint256 _value) public returns (bool success) {
 
     allowance[msg.sender][_spender] = _value;
-    Approval(msg.sender, _spender, _value);
+    emit Approval(msg.sender, _spender, _value);
     return true;
   }
 }
