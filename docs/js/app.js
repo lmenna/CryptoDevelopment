@@ -88,12 +88,14 @@ render: function() {
   App.contracts.SampleTokenSale.deployed().then(function(instance) {
     SampleTokenSaleInstance = instance;
     return SampleTokenSaleInstance.tokenPrice();
-  }).then(function(tokenPrice) {
+  })
+  .then(function(tokenPrice) {
     App.tokenPrice = tokenPrice;
     console.log("tokenPrice:", tokenPrice);
     $('.token-price').html(web3.fromWei(App.tokenPrice, "ether").toNumber());
     return SampleTokenSaleInstance.tokensSold();
-  }).then(function(tokensSold) {
+  })
+  .then(function(tokensSold) {
     App.tokensSold = tokensSold.toNumber();
     $('.tokens-sold').html(App.tokensSold);
     $('.tokens-available').html(App.tokensAvailable);
@@ -103,17 +105,22 @@ render: function() {
     console.log('Progress percentage: ' + progressPercent+'%');
 
     // Load token contract
-    App.contracts.SampleToken.deployed().then(function(instance){
+    App.contracts.SampleToken.deployed()
+    .then(function(instance){
       SampleTokenInstance = instance;
       return SampleTokenInstance.balanceOf(App.account);
-    }).then(function(balance) {
+    })
+    .then(function(balance) {
       $('.sample-token-balance').html(balance.toNumber());
       // Update screen state only when all of the async activity is finished.
       console.log("All async methods are done.  Update the screen.")
       App.loading = false;
       loader.hide();
       content.show();
-    });
+    })
+    .catch((err) => {
+      console.log("Caught an error while buying tokens: " + err);      
+    };
   });
 },
 
@@ -124,13 +131,15 @@ buyTokens: function() {
   var numberOfTokens = $('#numberOfTokens').val();
   console.log("About to buy: " + numberOfTokens + " tokens");
   console.log("Account: " + App.account);
-  App.contracts.SampleTokenSale.deployed().then(function(instance) {
+  App.contracts.SampleTokenSale.deployed()
+  .then(function(instance) {
     return instance.buyTokens(numberOfTokens, {
       from: App.account,
       value: numberOfTokens * App.tokenPrice,
       gas: 500000
     });
-  }).then(function(result) {
+  })
+  .then(function(result) {
     console.log("Tokens bought...");
     $('form').trigger('reset');
   })
@@ -138,7 +147,7 @@ buyTokens: function() {
     console.log("Caught an error while buying tokens: " + err);
     $('form').trigger('reset');
     App.render();
-  })
+  });
   console.log("END: buyTokens()");
 }
 }
