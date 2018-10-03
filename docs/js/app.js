@@ -120,7 +120,7 @@ render: function() {
     })
     .catch((err) => {
       console.log("Caught an error while buying tokens: " + err);
-    };
+    });
   });
 },
 
