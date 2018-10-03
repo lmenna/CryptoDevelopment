@@ -72,9 +72,11 @@ render: function() {
 
   var loader = $('#loader');
   var content = $('#content');
+  var errorContent = $('#error_content');
 
   loader.show();
   content.hide();
+  errorContent.hide();
 
   // Load account data
   web3.eth.getCoinbase(function(err, account) {
@@ -84,6 +86,8 @@ render: function() {
     }
     else {
       console.log("Error accessing web3Provider " + err);
+      loader.hide();
+      errorContent.show();
       return;
     }
   });
@@ -124,6 +128,8 @@ render: function() {
     })
     .catch((err) => {
       console.log("Caught an error while buying tokens: " + err);
+      loader.hide();
+      errorContent.show();
     });
   });
 },
