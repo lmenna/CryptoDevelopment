@@ -119,7 +119,7 @@ render: function() {
       content.show();
     })
     .catch((err) => {
-      console.log("Caught an error while buying tokens: " + err);      
+      console.log("Caught an error while buying tokens: " + err);
     };
   });
 },
