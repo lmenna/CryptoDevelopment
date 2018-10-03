@@ -82,6 +82,10 @@ render: function() {
       App.account = account;
       $('#accountAddress').html("Your Account:" + account);
     }
+    else {
+      console.log("Error accessing web3Provider " + err);
+      return;
+    }
   });
 
   // Load token sale contract
