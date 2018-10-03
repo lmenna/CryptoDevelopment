@@ -16,11 +16,14 @@ App = {
     console.log("initWeb3");
     if (typeof web3 !== 'undefined') {
       // If a web3 instance is already provided by Meta Mask.
+      console.log("Using metamask.")
       App.web3Provider = web3.currentProvider;
       web3 = new Web3(web3.currentProvider);
     } else {
       // Specify default instance if no web3 instance provided
-      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+      var localhost = 'http://localhost:7545';
+      console.log("Using " + localhost)
+      App.web3Provider = new Web3.providers.HttpProvider(localhost);
       web3 = new Web3(App.web3Provider);
     }
     return App.initContracts();
