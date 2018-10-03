@@ -100,6 +100,7 @@ render: function() {
 
     var progressPercent = 100*(App.tokensSold / App.tokensAvailable);
     $('#progress').css('width', progressPercent+'%');
+    console.log('Progress percentage: ' + progressPercent+'%');
 
     // Load token contract
     App.contracts.SampleToken.deployed().then(function(instance){
@@ -132,6 +133,11 @@ buyTokens: function() {
   }).then(function(result) {
     console.log("Tokens bought...");
     $('form').trigger('reset');
+  })
+  .catch((err) => {
+    console.log("Caught an error while buying tokens: " + err);
+    $('form').trigger('reset');
+    App.render();
   })
   console.log("END: buyTokens()");
 }
