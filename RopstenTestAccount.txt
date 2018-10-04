@@ -1,9 +1,0 @@
-Account1 public address
-0xda2eaaa2fc112c922b52579cdcf392f43c193a64
-Account1 private key
-0x88BFB49DD66006D0842E3C3AEA1F795567AC8FE06616CF667D27F01643236A3D
-
-Account 2 public address
-0xb9b35615f18b182645f18f20f95888a4489e61f2
-Account 2 private key
-
